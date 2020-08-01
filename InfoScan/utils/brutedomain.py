@@ -57,7 +57,7 @@ class Brutedomain(object):
                     if results: 
                         for res in results:
                             if res.address != '127.0.0.1' and res.address not in self.result:
-                                print(res.address)
+                                #print(res.address)
                                 self.result.append(sub)
                                 #self.write(sub)
 
