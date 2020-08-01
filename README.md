@@ -3,7 +3,7 @@
 可自己在utils文件夹下添加其他模块
 
 # 文件结构
->  ├─InfoScan
+   ├─InfoScan
    │  common.py       #定义一些通用的方法
    │  config.py       #定义全局的变量
    │  InfoScan.py     #主程序文件
