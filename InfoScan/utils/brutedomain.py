@@ -19,7 +19,7 @@ class Brutedomain(object):
 
     def run(self):
         # 调用多线程进行爆破子域名
-        with open(os.getcwd()+'\\dict\\dict.txt') as f:     #载入字典
+        with open(os.getcwd()+'/dict/dict.txt') as f:     #载入字典
             for i in f:         # 往多线程里添加数据
                 self.queue.put(i.rstrip() + '.' + self.domain)            # 拼接
         total = self.queue.qsize()  #总的数量
