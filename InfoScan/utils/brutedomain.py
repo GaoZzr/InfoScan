@@ -43,6 +43,7 @@ class Brutedomain(object):
             self.total = total
             self.result = result
             self.thread_count = thread_count
+            self.rsv = dns.resolver.Resolver()
             #self.write = write()
 
         def run(self):
@@ -52,11 +53,13 @@ class Brutedomain(object):
                 #print(sub)
                 self.msg()
                 try:
-                    results = dns.resolver.query(sub,'A')
-                    if results.response.answer and results.response.answer != '[<DNS '+sub+'. IN A RRset: [<127.0.0.1>]>]':  #形如xxx.xxx.xxx.xxx的域名会被解析为127.0.0.1，所以需要再次判断
-                        #print(sub)
-                        self.result.append(sub)
-                        #self.write(sub)
+                    results = self.rsv.query(sub)
+                    if results: 
+                        for res in results:
+                            if res.address != '127.0.0.1' and res.address not in self.result:
+                                print(res.address)
+                                self.result.append(sub)
+                                #self.write(sub)
 
                 except Exception as e:
                     #return e
