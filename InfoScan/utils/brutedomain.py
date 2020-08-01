@@ -53,7 +53,7 @@ class Brutedomain(object):
                 self.msg()
                 try:
                     results = dns.resolver.query(sub,'A')
-                    if results.response.answer:
+                    if results.response.answer & results.response.answer != '127.0.0.1':   #形如xxx.xxx.xxx.xxx的域名会被解析为127.0.0.1，所以需要再次判断
                         #print(sub)
                         self.result.append(sub)
                         #self.write(sub)
