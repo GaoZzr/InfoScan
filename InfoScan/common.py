@@ -74,3 +74,12 @@ def print_try(res):
         print(res)
     except "TypeError: object of type 'IndexError' has no len()":
         pass
+
+#接受用户输入
+def user_input():
+    a = input("基础爬取完成，Q/q:退出，B/b:继续爆破子域名:")
+    if a=='q' or a=='Q':
+        print('have a good time!')
+        exit()
+    if a=='b' or a == 'B':
+        print('正在准备子域名爆破')
