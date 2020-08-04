@@ -33,7 +33,7 @@ def main():
 
     print("[*]正在通过ip138查询域名[*]")
     result3 = Ip138(domain = sys.argv[1]).run()
-    print("ip138查询完成,共"+str(len(result3))+"个域名\n")
+    print_try("ip138查询完成,共"+str(len(result3))+"个域名\n")
 
     # 将所有列表合并，方便去重整理结果
     result_end(result1)   #crt查询结果
