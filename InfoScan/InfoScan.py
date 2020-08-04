@@ -5,9 +5,9 @@ from utils.yumingco import Yumingco
 from utils.brutedomain import Brutedomain
 from utils.cms import Cms
 from utils.beian import Beian
+from utils.ip138 import Ip138
 from common import *
 import sys
-
 
 def main():
     # ============cms查询============== #
@@ -29,16 +29,17 @@ def main():
 
     print("[*]正在通过yumingco查询域名[*]")
     result2 = Yumingco(domain = sys.argv[1]).run()
-    print_try("yumingco查询完成,共"+str(len(result2))+"个域名\n")
+    print_try("yumingco查询完成,共"+str(len(result2))+"个域名")
 
-    print("\n[*]正在进行子域名爆破,预计用时3分钟[*]")
-    result = Brutedomain(domain = sys.argv[1]).run()
-    print_try("爆破完成,共"+str(len(result))+"个域名\n")
+    print("[*]正在通过ip138查询域名[*]")
+    result3 = Ip138(domain = sys.argv[1]).run()
+    print("ip138查询完成,共"+str(len(result3))+"个域名\n")
 
     # 将所有列表合并，方便去重整理结果
     result_end(result1)   #crt查询结果
     result_end(result2)   #yumingco查询结果
-    result_end(result)    #爆破结果
+    result_end(result3)   # ip138查询结果
+    #result_end(result)    #爆破结果
     result4 = list(set(resultall))    #去重后的结果
 
     print("[*]整合结果中(去重)[*]")
@@ -53,6 +54,19 @@ def main():
     print("\n======子域名======")
     print_result(result4)
 
+    # ============子域名爆破============== #
+    user_input()
+    print("\n[*]正在进行子域名爆破,预计用时3分钟[*]")
+    result = Brutedomain(domain = sys.argv[1]).run()
+    print_try("爆破完成,共"+str(len(result))+"个域名\n")
+
+    # 将所有列表合并，方便去重整理结果
+    result_end(result1)   #crt查询结果
+    result_end(result2)   #yumingco查询结果
+    result_end(result3)   # ip138查询结果
+    result_end(result)    #爆破结果
+    result9 = list(set(resultall))    #去重后的结果
+    print(result9)
 if __name__ == '__main__':
     print('''
  ___        __      ____                  
