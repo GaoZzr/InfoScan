@@ -19,4 +19,4 @@ class Ip138(object):      #定义一个类
             #write(list(set(self.result)))
             return list(set(self.result))   #去重
         except Exception as e:
-            return e
+            return self.result
