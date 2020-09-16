@@ -66,7 +66,7 @@ def main():
     result_end(result3)   # ip138查询结果
     result_end(result)    #爆破结果
     result9 = list(set(resultall))    #去重后的结果
-    print(result9)
+    print_result(result9)
 if __name__ == '__main__':
     print('''
  ___        __      ____                  
