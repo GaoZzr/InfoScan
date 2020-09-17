@@ -67,6 +67,11 @@ def main():
     result_end(result)    #爆破结果
     result9 = list(set(resultall))    #去重后的结果
     print_result(result9)
+    j = sys.argv[1]+".txt"
+    f = open(j,"a")
+    for res in result9:
+        f.write(res+'\n')
+    print('子域名结果保存至'+j)
 if __name__ == '__main__':
     print('''
  ___        __      ____                  
