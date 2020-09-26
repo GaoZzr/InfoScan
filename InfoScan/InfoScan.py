@@ -79,7 +79,7 @@ if __name__ == '__main__':
  | || '_ \| |_ / _ \___ \ / __/ _` | '_ \ 
  | || | | |  _| (_) |__) | (_| (_| | | | |
 |___|_| |_|_|  \___/____/ \___\__,_|_| |_|
-            
+                               By:CyzCc
         ''')
     print("Use: python3 InfoScan.py domain Thread")
     print("Example: python3 InfoScan.py baidu.com 100")
