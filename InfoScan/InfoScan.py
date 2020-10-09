@@ -1,4 +1,3 @@
-# 导入crt.py中的Crt对象
 import time
 from utils.crt import Crt
 from utils.yumingco import Yumingco
@@ -6,72 +5,58 @@ from utils.brutedomain import Brutedomain
 from utils.cms import Cms
 from utils.beian import Beian
 from utils.ip138 import Ip138
+from utils.hackertarget import Hackertarget
+from utils.virusTotal import Virus
+from utils.cesuyun import Cesuyun
 from common import *
 import sys
 
 def main():
-    # ============cms查询============== #
-
-    print("[*]正在进行指纹识别[*]")
-    result5 = Cms(domain = sys.argv[1]).run()
-    print('指纹识别完成')
-
-    # ============网站备案信息============== #
-    print("[*]正在进行备案信息查询[*]")
-    result6 = Beian(domain=sys.argv[1]).run()
-    print('备案信息查询完成')
-
-    # ============子域名收集============== #
-
-    print("[*]正在通过crt查询域名[*]")
-    result1 = Crt(domain = sys.argv[1]).run()
-    print_try("crt查询完成,共"+str(len(result1))+"个域名")
-
-    print("[*]正在通过yumingco查询域名[*]")
-    result2 = Yumingco(domain = sys.argv[1]).run()
-    print_try("yumingco查询完成,共"+str(len(result2))+"个域名")
-
-    print("[*]正在通过ip138查询域名[*]")
-    result3 = Ip138(domain = sys.argv[1]).run()
-    print_try("ip138查询完成,共"+str(len(result3))+"个域名\n")
+    url = Url(sys.argv[1])      #处理域名
+    print(get_domain_root(url))
+    # # ============cms查询============== # #
+    result_cms = Cms(domain = get_domain_root(url)).run()
+    # # ============网站备案信息============== # #
+    result_beian = Beian(domain=get_domain_root(url)).run()
+    # # ============子域名收集============== # #
+    result1 = Crt(domain = get_domain_root(url)).run()
+    result2 = Yumingco(domain = get_domain_root(url)).run()
+    result3 = Ip138(domain = get_domain_root(url)).run()
+    result4 = Hackertarget(domain=get_domain_root(url)).run()
+    result5 = Virus(domain = get_domain_root(url)).run()
+    result6 = Cesuyun(domain = get_domain_root(url)).run()
 
     # 将所有列表合并，方便去重整理结果
     result_end(result1)   #crt查询结果
     result_end(result2)   #yumingco查询结果
     result_end(result3)   # ip138查询结果
-    #result_end(result)    #爆破结果
-    result4 = list(set(resultall))    #去重后的结果
+    result_end(result4)   #hackertarget查询结果
+    result_end(result5)   # virustotal查询
+    result_end(result6)   #Cesuyun查询
+    result_chaxun = list(set(resultall))    #去重后的结果
 
     print("[*]整合结果中(去重)[*]")
-    print_try("[*]整合完成，共"+str(len(result4))+"个域名[*]")
-    time.sleep(3)
+    print_try("[*]整合完成，共"+str(len(result_chaxun))+"个域名[*]")
+    time.sleep(2)
 
     print("查询结果：\n")
     print("======备案信息======")
-    print(result6)
+    print(result_beian)
     print("\n======指纹信息======")
-    print(result5)
+    print(result_cms)
     print("\n======子域名======")
-    print_result(result4)
+    print_result(result_chaxun)
 
     # ============子域名爆破============== #
     user_input()
-    print("\n[*]正在进行子域名爆破,预计用时3分钟[*]")
-    result = Brutedomain(domain = sys.argv[1]).run()
-    print_try("爆破完成,共"+str(len(result))+"个域名\n")
-
+    result_baopo = Brutedomain(domain = get_domain_root(url)).run()
     # 将所有列表合并，方便去重整理结果
-    result_end(result1)   #crt查询结果
-    result_end(result2)   #yumingco查询结果
-    result_end(result3)   # ip138查询结果
-    result_end(result)    #爆破结果
-    result9 = list(set(resultall))    #去重后的结果
-    print_result(result9)
-    j = sys.argv[1]+".txt"
-    f = open(j,"a")
-    for res in result9:
-        f.write(res+'\n')
-    print('子域名结果保存至'+j)
+    result_end(result_baopo)    #爆破结果
+    result_all = list(set(resultall))    #去重后的结果
+    print_result(result_all)
+    Baocun(url,result_all)      #将最终的结果保存到**.**.**.txt文件中
+
+
 if __name__ == '__main__':
     print('''
  ___        __      ____                  
@@ -80,6 +65,7 @@ if __name__ == '__main__':
  | || | | |  _| (_) |__) | (_| (_| | | | |
 |___|_| |_|_|  \___/____/ \___\__,_|_| |_|
                                By:CyzCc
+                               Data:2020.08.12
         ''')
     print("Use: python3 InfoScan.py domain Thread")
     print("Example: python3 InfoScan.py baidu.com 100")
