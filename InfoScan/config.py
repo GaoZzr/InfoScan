@@ -16,7 +16,7 @@ thread_count = sys.argv[2]
 domain = sys.argv[1]
 
 # 超时时间
-timeout = 10
+timeout = 20
 
 # 是否允许url重定向
 allow_redirects = True
