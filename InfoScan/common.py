@@ -124,6 +124,7 @@ def user_input2():
     a = input("批量爬取完成，Q/q:保存批量查询结果并退出，B/b:继续爆破子域名:")
     #Baocun(url,resultall)
     if a=='q' or a=='Q':
+        End()
         #Baocun(url, resultall)
         print('have a good time!')
         exit()
