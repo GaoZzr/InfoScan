@@ -2,6 +2,7 @@
 
 import random
 import sys
+# from common import parse_args
 # 是否开启https服务器的证书校验
 allow_ssl_verify=False
 
@@ -10,10 +11,11 @@ allow_ssl_verify=False
 # ===============================
 
 # 多线程线程数
-thread_count = sys.argv[2]
+# args = parse_args()
+# thread_count = args.thread
 
 # 域名
-domain = sys.argv[1]
+# domain = sys.argv[1]
 
 # 超时时间
 timeout = 20
