@@ -1,12 +1,44 @@
 #封装一些通用的请求方法
 
 from config import *
-
+import argparse
 import requests
 import re
 import requests.packages.urllib3
 from urllib.parse import urlparse
 requests.packages.urllib3.disable_warnings()    #避免访问https网站时显示警告信息
+
+# 命令行选项
+def parse_args():
+    parser = argparse.ArgumentParser(epilog='\tExample: \r\npython ' + sys.argv[0] + " -u http://www.baidu.com -t 50")
+    parser.add_argument("-u", "--url", help="The website")
+    parser.add_argument("-f", "--file", help="The file contains url")
+    parser.add_argument("-t", "--thread", help="The brute thread")
+    return parser.parse_args()
+
+# 将所有文件汇总并去重
+def End():
+    SUB = []
+    SUB_ALL = []
+    args = parse_args()
+    a = input("[*]程序运行完成，是否将所有结果汇总到result.txt并去重[Y/N]:")
+    if a == 'Y' or a == 'y':
+        for i in open(args.file,'r'):
+            i = i.replace('\n','')
+            SUB.append(get_domain_root(i))
+        for j in SUB:
+            print("result/"+j+'.txt'+'\n')
+            for data in open("result/"+j+'.txt'):
+                data = data.replace('\n','')
+                SUB_ALL.append(data)
+        with open('result/result.txt','a') as f:
+            for data in list(set(SUB_ALL)):
+                f.write(data+'\n')
+            f.close()
+    print("处理完成！结果保存至result/result.txt")
+    exit()
+    if a == 'N' or a == 'n':
+        exit()
 
 # get请求方法
 def http_requests_get(url, allow_redirects = allow_redirects):
@@ -77,9 +109,22 @@ def print_try(res):
         pass
 
 #接受用户输入
-def user_input():
-    a = input("基础爬取完成，Q/q:退出，B/b:继续爆破子域名:")
+def user_input(url,result_chaxun):
+    a = input("基础爬取完成，Q/q:保存查询结果并退出，B/b:继续爆破子域名:")
     if a=='q' or a=='Q':
+        Baocun(url, result_chaxun)
+        print('have a good time!')
+        exit()
+    if a=='b' or a == 'B':
+        print('正在准备子域名爆破')
+
+
+#接受用户输入
+def user_input2():
+    a = input("批量爬取完成，Q/q:保存批量查询结果并退出，B/b:继续爆破子域名:")
+    #Baocun(url,resultall)
+    if a=='q' or a=='Q':
+        #Baocun(url, resultall)
         print('have a good time!')
         exit()
     if a=='b' or a == 'B':
@@ -88,10 +133,17 @@ def user_input():
 # 保存子域名到文件
 def Baocun(url,result_all):
     j = get_domain_root(url) + ".txt"
-    f = open(j, "a")
+    f = open("result/"+j, "a")
     for res in result_all:
         f.write(res + '\n')
-    print('子域名结果保存至' + j)
+    print('所有子域名结果保存至result/' + j)
+
+# # 保存子域名到文件
+# def Baocun2(file,result_all):
+#     f = open("result/"+file, "a")
+#     for res in result_all:
+#         f.write(res + '\n')
+#     print('子域名结果保存至' + file)
 
 
 def Url(url):
@@ -100,6 +152,11 @@ def Url(url):
     if not url.endswith('/'):
         url = url + "/"
         return url
+
+# 读取文件
+# def read_file():
+#     if ''
+
 
 #将用户的输入连接返回成域名
 
