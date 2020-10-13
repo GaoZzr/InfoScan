@@ -70,8 +70,8 @@ if __name__ == '__main__':
                                Data:2020.08.12
         ''')
     print("Use: python3 InfoScan.py domain Thread")
-    print("Example: python3 InfoScan.py baidu.com 100")
-    print("Example: python3 InfoScan.py baidu.com 100 > result.txt")
+    print("Example: python3 InfoScan.py -u baidu.com -t 100")
+    print("Example: python3 InfoScan.py -f url.txt -t 100")
     args = parse_args()
     if args.file == None:
         url = Url(args.url)
