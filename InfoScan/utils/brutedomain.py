@@ -5,21 +5,22 @@ from common import *
 import threading
 from queue import Queue     # 接收域名
 import os
+from urllib.parse import urlparse
 import sys
-
 
 class Brutedomain(object):
     # 初始化
     #q = queue.Queue()
-    def __init__(self,domain):
+    def __init__(self,domain,thread_count):
         self.domain = domain
         self.queue = Queue()
-        self.thread_count = int(sys.argv[2])
+        self.thread_count = thread_count
+        self.thread_count = int(thread_count)
         self.result = []
 
     def run(self):
         # 调用多线程进行爆破子域名
-        print("\n[*]正在进行子域名爆破,请稍等[*]")
+        print("\n[*]正在对"+self.domain+"进行子域名爆破,请稍等[*]")
         with open(os.getcwd()+'/dict/dict.txt') as f:     #载入字典
             for i in f:         # 往多线程里添加数据
                 self.queue.put(i.rstrip() + '.' + self.domain)            # 拼接
@@ -34,7 +35,7 @@ class Brutedomain(object):
             t.join()
 
         print('\n')
-        print_try("爆破完成,共" + str(len(self.result)) + "个域名\n")
+        print_try("爆破完成,共爆破出" + str(len(self.result)) + "个域名\n")
         return list(set(self.result))
 
     class BruteRun(threading.Thread):
