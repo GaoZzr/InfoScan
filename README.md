@@ -477,4 +477,4 @@ result/zhihu.com.txt
 root@kali:~/桌面/tools/InfoScan/InfoScan# 
 
 ```
-![]456.png
+![](456.png)
